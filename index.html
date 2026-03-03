@@ -5,27 +5,74 @@
     <title>Student Experiences with Food Insecurity at the UofC</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        nav ul { list-style: none; padding: 0; }
-        nav li { margin: 8px 0; }
-        a.button-like, button { display: inline-block; padding: 10px 16px; margin: 6px; border-radius: 4px; border: 1px solid #333; background: #f0f0f0; text-decoration: none; color: #000; }
+        :root { --card-bg: #ffdede; --card-radius: 12px; }
+        html, body { height: 100%; margin: 0; }
+        body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; }
+
+        /* Center area for student examples */
+        .center-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .cards { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; }
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--card-radius);
+            padding: 22px 28px;
+            width: 200px;
+            text-align: center;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.06);
+        }
+
+        /* Biography and Research links fixed at left bottom */
+        .corner-links {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .corner-links a {
+            background: #f0f0f0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #000;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+
+        @media (max-width: 520px) {
+            .cards { gap: 12px; }
+            .card { width: 140px; padding: 16px; }
+        }
     </style>
 </head>
 <body>
     <h1>Student Experiences with Food Insecurity at the UofC</h1>
 
-    <nav>
-        <ul>
-            <li><a href="marlon.html">Marlon</a></li>
-            <li><a href="jaspreet.html">Jaspreet</a></li>
-            <li><a href="sofia.html">Sofia</a></li>
-        </ul>
-    </nav>
+    <main class="center-container">
+        <div class="cards">
+            <a class="card" href="marlon.html">Marlon</a>
+            <a class="card" href="jaspreet.html">Jaspreet</a>
+            <a class="card" href="sofia.html">Sofia</a>
+        </div>
+    </main>
 
-    <p>
-        <button onclick="location.href='biography.html'">Biography</button>
-        <button onclick="location.href='research.html'">Our Research</button>
-    </p>
+    <div class="corner-links">
+        <a href="biography.html">Biography</a>
+        <a href="research.html">Our Research</a>
+    </div>
 
 </body>
 </html>
