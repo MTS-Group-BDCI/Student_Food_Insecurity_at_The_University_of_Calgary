@@ -154,7 +154,8 @@
             padding: 8px 12px;
             border-radius: 6px;
             text-decoration: none;
-            color: #000;
+            color: white;
+            font-weight: bold;
             border: 1px solid rgba(0,0,0,0.08);
             font-size: 13px;
             transition: background 0.3s;
@@ -199,6 +200,16 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+        }
+
+        .scroll-container {
+            height: 100%;
+            width: 100%;
+            overflow-y: auto;
+        }
+
+        .profile-section {
+            margin-bottom: 40px;
         }
 
         .profile-content {
@@ -344,21 +355,33 @@
 
         <div class="main-ui">
             <div class="profile-card">
-                <div class="profile-content">
-                    <div class="description" id="description"></div>
-                    <div class="summary" id="summary"></div>
-                    <div class="illustration" id="illustration"></div>
+                <div class="scroll-container">
+                    <div class="profile-section">
+                        <div class="profile-content">
+                            <div class="description" id="description0"></div>
+                            <div class="summary" id="summary0"></div>
+                            <div class="illustration" id="illustration0"></div>
+                        </div>
+                        <a class="go-btn" id="goBtn0" href="jalen.html">Go to School</a>
+                    </div>
+                    <div class="profile-section">
+                        <div class="profile-content">
+                            <div class="description" id="description1"></div>
+                            <div class="summary" id="summary1"></div>
+                            <div class="illustration" id="illustration1"></div>
+                        </div>
+                        <a class="go-btn" id="goBtn1" href="sofia.html">Go to School</a>
+                    </div>
+                    <div class="profile-section">
+                        <div class="profile-content">
+                            <div class="description" id="description2"></div>
+                            <div class="summary" id="summary2"></div>
+                            <div class="illustration" id="illustration2"></div>
+                        </div>
+                        <a class="go-btn" id="goBtn2" href="ben.html">Go to School</a>
+                    </div>
                 </div>
-                <div class="thumbnails">
-                    <div class="thumb" onclick="selectStudent(0)">S</div>
-                    <div class="thumb" onclick="selectStudent(1)">J</div>
-                    <div class="thumb" onclick="selectStudent(2)">B</div>
-                </div>
-                <button class="next-btn" onclick="nextStudent()">→</button>
-                <div class="location-pin">📍</div>
             </div>
-
-            <a class="go-btn" id="goBtn" href="sofia.html">Go to School</a>
         </div>
     </div>
 
@@ -369,15 +392,6 @@
 
     <script>
         const students = [
-            { name: 'Sofia', file: 'sofia.html', description: `Sofia, a business student living in Okotoks, commutes long distances to campus each day, with travel taking up a significant portion of her time. Between early mornings, long classes, and part-time work, her schedule leaves little room for meal preparation or consistent eating. While her financial situation is constrained, the primary challenge she faces is time, food becomes something that must fit into an already overloaded day, rather than something she can plan for. 
-
-As the semester progresses, this lack of time begins to shape her eating habits. She often relies on quick, convenient options or skips meals entirely when her schedule becomes too tight. The cumulative effect leaves her feeling fatigued and unable to fully focus in class. Over time, food insecurity becomes embedded in her routine, not because food is entirely unaffordable, but because the time required to access and prepare it is no longer available.`, summary: `Lives in Okotoks and faces long daily commute times
-
-Balances part-time work with academic responsibilities
-
-Financially constrained due to transportation and living costs
-
-Limited time for meal preparation, leading to reliance on quick, costly food options` },
             { name: 'Jalen', file: 'jalen.html', description: `Jalen, a second-year BDCI student in SAPL, lives in Northeast Calgary in a shared house with four others. His days are shaped by constant movement between the downtown studio and the main campus, with inconsistent commute times that make his schedule unpredictable. While he shares living costs, his biggest challenge is convenience, finding the time and opportunity to access food within a fragmented and fast-paced routine. He is often moving between locations, leaving little room to plan meals or make trips to grocery stores.
 
 Calgary's urban layout intensifies this difficulty: residential areas, campus, and downtown are separated, with few walkable food options near the university. Jalen often relies on nearby convenience foods, which are more expensive and less nutritious. Spending most of his day in transit and unaware of resources like the Campus Food Hub, food insecurity has become a routine shaped by distance, disconnection, and the city's design.`, summary: `Lives in Northeast Calgary with long, inconsistent commutes between downtown and main campus
@@ -387,6 +401,15 @@ Balances a fragmented schedule across multiple locations
 Relies on convenient, nearby food due to limited time and access to groceries
 
 Unaware of campus resources like the Food Hub, increasing barriers to affordable food access` },
+            { name: 'Sofia', file: 'sofia.html', description: `Sofia, a business student living in Okotoks, commutes long distances to campus each day, with travel taking up a significant portion of her time. Between early mornings, long classes, and part-time work, her schedule leaves little room for meal preparation or consistent eating. While her financial situation is constrained, the primary challenge she faces is time, food becomes something that must fit into an already overloaded day, rather than something she can plan for. 
+
+As the semester progresses, this lack of time begins to shape her eating habits. She often relies on quick, convenient options or skips meals entirely when her schedule becomes too tight. The cumulative effect leaves her feeling fatigued and unable to fully focus in class. Over time, food insecurity becomes embedded in her routine, not because food is entirely unaffordable, but because the time required to access and prepare it is no longer available.`, summary: `Lives in Okotoks and faces long daily commute times
+
+Balances part-time work with academic responsibilities
+
+Financially constrained due to transportation and living costs
+
+Limited time for meal preparation, leading to reliance on quick, costly food options` },
             { name: 'Ben', file: 'ben.html', description: `Ben, a third-year engineering student, from Australia, lives in Kananaskis Hall while managing limited financial support from his family. Each month, he is forced to make difficult trade-offs just to get by, often cutting back on food to afford other essentials. What begins as small adjustments gradually turns into inconsistent meals and declining nutrition.
 
 As the semester progresses, the impact becomes harder to ignore. Ben feels constantly tired, struggles to focus during long study sessions, and finds it increasingly difficult to keep up with the demands of his program. Being far from home, without a strong support system, these challenges are compounded by stress and isolation. Food insecurity becomes more than a financial issue, it begins to affect his health, his academics, and his overall sense of stability`, summary: `International student fees
@@ -398,35 +421,20 @@ Experiences food insecurity due to budget constraints
 Faces fatigue and reduced academic performance linked to inconsistent meals` }
         ];
 
-        let currentIndex = 0;
-
         updateDisplay();
 
         function updateDisplay() {
-            const student = students[currentIndex];
-            document.getElementById('description').textContent = student.description;
-            
-            // Convert summary to bullet points
-            const summaryLines = student.summary.split('\n').filter(line => line.trim());
-            const summaryHtml = '<ul>' + summaryLines.map(line => `<li>${line.trim()}</li>`).join('') + '</ul>';
-            document.getElementById('summary').innerHTML = summaryHtml;
-            
-            document.getElementById('illustration').textContent = `Illustration of ${student.name}`;
-            document.getElementById('goBtn').href = student.file;
-            const thumbs = document.querySelectorAll('.thumb');
-            thumbs.forEach((thumb, i) => {
-                thumb.classList.toggle('selected', i === currentIndex);
+            students.forEach((student, i) => {
+                document.getElementById(`description${i}`).textContent = student.description;
+                
+                // Convert summary to bullet points
+                const summaryLines = student.summary.split('\n').filter(line => line.trim());
+                const summaryHtml = '<ul>' + summaryLines.map(line => `<li>${line.trim()}</li>`).join('') + '</ul>';
+                document.getElementById(`summary${i}`).innerHTML = summaryHtml;
+                
+                document.getElementById(`illustration${i}`).textContent = `Illustration of ${student.name}`;
+                document.getElementById(`goBtn${i}`).href = student.file;
             });
-        }
-
-        function nextStudent() {
-            currentIndex = (currentIndex + 1) % students.length;
-            updateDisplay();
-        }
-
-        function selectStudent(index) {
-            currentIndex = index;
-            updateDisplay();
         }
     </script>
 
