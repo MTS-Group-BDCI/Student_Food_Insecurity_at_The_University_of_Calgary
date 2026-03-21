@@ -21,23 +21,25 @@
             flex-direction: column; 
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            background: #000;
             padding: 40px 20px;
         }
 
         .container {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
             gap: 30px;
             width: 100%;
-            max-width: 700px;
+            max-width: 1400px;
         }
 
         h1 {
             font-size: 32px;
-            text-align: center;
-            color: #333;
+            text-align: left;
+            color: white;
+            font-weight: bold;
+            width: 100%;
         }
 
         .carousel {
@@ -182,6 +184,7 @@
             gap: 20px;
             align-items: center;
             width: 100%;
+            height: 70vh;
         }
 
         .profile-card {
@@ -189,8 +192,7 @@
             border-radius: 24px;
             padding: 32px;
             width: 100%;
-            max-width: 1200px;
-            aspect-ratio: 16 / 5;
+            height: 100%;
             box-shadow: 0 8px 24px rgba(0,0,0,0.15);
             border: 2px solid #d32f2f;
             position: relative;
@@ -205,10 +207,27 @@
             gap: 20px;
         }
 
-        .description, .summary {
+        .description {
             flex: 1;
             font-size: 14px;
             line-height: 1.5;
+            color: #fff;
+        }
+
+        .summary {
+            flex: 1;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #fff;
+        }
+
+        .summary ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .summary li {
+            margin-bottom: 8px;
         }
 
         .illustration {
@@ -286,16 +305,20 @@
 
         h2 {
             font-size: 24px;
-            text-align: center;
-            color: #666;
+            text-align: left;
+            color: white;
+            font-weight: bold;
             margin: 10px 0;
+            width: 100%;
         }
 
         h3 {
             font-size: 18px;
-            text-align: center;
-            color: #666;
+            text-align: left;
+            color: white;
+            font-weight: bold;
             margin: 10px 0;
+            width: 100%;
         }
 
         #logo {
@@ -380,7 +403,12 @@ Faces fatigue and reduced academic performance linked to inconsistent meals` }
         function updateDisplay() {
             const student = students[currentIndex];
             document.getElementById('description').textContent = student.description;
-            document.getElementById('summary').textContent = student.summary;
+            
+            // Convert summary to bullet points
+            const summaryLines = student.summary.split('\n').filter(line => line.trim());
+            const summaryHtml = '<ul>' + summaryLines.map(line => `<li>${line.trim()}</li>`).join('') + '</ul>';
+            document.getElementById('summary').innerHTML = summaryHtml;
+            
             document.getElementById('illustration').textContent = `Illustration of ${student.name}`;
             document.getElementById('goBtn').href = student.file;
             const thumbs = document.querySelectorAll('.thumb');
