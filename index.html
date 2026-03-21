@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Student Experiences with Food Insecurity at the UofC</title>
+    <title>Student Food Insecurity at the University of Calgary</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         * {
@@ -175,40 +175,164 @@
             .nav-buttons { flex-direction: column; }
             .nav-btn { width: 100%; }
         }
+
+        .main-ui {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .profile-card {
+            background: #fdd;
+            border-radius: 24px;
+            padding: 32px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            border: 2px solid #f00;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-content {
+            display: flex;
+            width: 100%;
+            gap: 20px;
+        }
+
+        .description, .summary {
+            flex: 1;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .illustration {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            height: 200px;
+            background: #f9f9f9;
+        }
+
+        .thumbnails {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            display: flex;
+            gap: 5px;
+        }
+
+        .thumb {
+            width: 30px;
+            height: 30px;
+            background: #ccc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .thumb.selected {
+            background: #f00;
+            color: white;
+        }
+
+        .next-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #6b6b6b;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .location-pin {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 24px;
+        }
+
+        .go-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .go-btn:hover {
+            background: #45a049;
+        }
+
+        h2 {
+            font-size: 24px;
+            text-align: center;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        h3 {
+            font-size: 18px;
+            text-align: center;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        #logo {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #ccc;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f9f9f9;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Student Experiences with Food Insecurity at the UofC</h1>
+        <h1>Student Food Insecurity at the University of Calgary</h1>
+        <h2>Map the Systems Competition 2026</h2>
+        <h3>University of Calgary - School of Architecture, Planning, and Landscape</h3>
+        <div id="logo" style="width: 100px; height: 100px; border: 1px solid #ccc; margin: 20px auto; display: flex; align-items: center; justify-content: center; background: #f9f9f9;">Logo Placeholder</div>
 
-        <div class="carousel">
-            <div class="student-card">
-                <div class="student-name" id="studentName">Marlon</div>
-                <div class="student-info">Biology Major, 3rd Year</div>
-                
-                <div class="metrics-preview">
-                    <div class="metric-mini">
-                        <div>Happiness</div>
-                        <div class="metric-mini-icon">😊</div>
-                    </div>
-                    <div class="metric-mini">
-                        <div>GPA</div>
-                        <div>3.5</div>
-                    </div>
-                    <div class="metric-mini">
-                        <div>Bank Account</div>
-                        <div>$500</div>
-                    </div>
+        <div class="main-ui">
+            <div class="profile-card">
+                <div class="profile-content">
+                    <div class="description" id="description"></div>
+                    <div class="summary" id="summary"></div>
+                    <div class="illustration" id="illustration"></div>
                 </div>
-
-                <div class="nav-buttons">
-                    <button class="nav-btn" onclick="previousStudent()">← Previous</button>
-                    <a class="enter-btn" id="enterBtn" href="marlon.html" style="text-decoration: none; display: inline-block;">Enter Game</a>
-                    <button class="nav-btn" onclick="nextStudent()">Next →</button>
+                <div class="thumbnails">
+                    <div class="thumb" onclick="selectStudent(0)">S</div>
+                    <div class="thumb" onclick="selectStudent(1)">J</div>
+                    <div class="thumb" onclick="selectStudent(2)">B</div>
                 </div>
-
-                <div class="page-indicator" id="pageIndicator">1 / 3</div>
+                <button class="next-btn" onclick="nextStudent()">→</button>
+                <div class="location-pin">📍</div>
             </div>
+
+            <a class="go-btn" id="goBtn" href="sofia.html">Go to School</a>
         </div>
     </div>
 
@@ -219,18 +343,49 @@
 
     <script>
         const students = [
-            { name: 'Marlon', file: 'marlon.html', description: 'Biology Major, 3rd Year' },
-            { name: 'Jaspreet', file: 'jaspreet.html', description: 'Computer Science Major, 2nd Year' },
-            { name: 'Sofia', file: 'sofia.html', description: 'Philosophy Major, 4th Year' }
+            { name: 'Sofia', file: 'sofia.html', description: `Sofia, a business student living in Okotoks, commutes long distances to campus each day, with travel taking up a significant portion of her time. Between early mornings, long classes, and part-time work, her schedule leaves little room for meal preparation or consistent eating. While her financial situation is constrained, the primary challenge she faces is time, food becomes something that must fit into an already overloaded day, rather than something she can plan for. 
+
+As the semester progresses, this lack of time begins to shape her eating habits. She often relies on quick, convenient options or skips meals entirely when her schedule becomes too tight. The cumulative effect leaves her feeling fatigued and unable to fully focus in class. Over time, food insecurity becomes embedded in her routine, not because food is entirely unaffordable, but because the time required to access and prepare it is no longer available.`, summary: `Lives in Okotoks and faces long daily commute times
+
+Balances part-time work with academic responsibilities
+
+Financially constrained due to transportation and living costs
+
+Limited time for meal preparation, leading to reliance on quick, costly food options` },
+            { name: 'Jalen', file: 'jalen.html', description: `Jalen, a second-year BDCI student in SAPL, lives in Northeast Calgary in a shared house with four others. His days are shaped by constant movement between the downtown studio and the main campus, with inconsistent commute times that make his schedule unpredictable. While he shares living costs, his biggest challenge is convenience, finding the time and opportunity to access food within a fragmented and fast-paced routine. He is often moving between locations, leaving little room to plan meals or make trips to grocery stores.
+
+Calgary's urban layout intensifies this difficulty: residential areas, campus, and downtown are separated, with few walkable food options near the university. Jalen often relies on nearby convenience foods, which are more expensive and less nutritious. Spending most of his day in transit and unaware of resources like the Campus Food Hub, food insecurity has become a routine shaped by distance, disconnection, and the city's design.`, summary: `Lives in Northeast Calgary with long, inconsistent commutes between downtown and main campus
+
+Balances a fragmented schedule across multiple locations
+
+Relies on convenient, nearby food due to limited time and access to groceries
+
+Unaware of campus resources like the Food Hub, increasing barriers to affordable food access` },
+            { name: 'Ben', file: 'ben.html', description: `Ben, a third-year engineering student, from Australia, lives in Kananaskis Hall while managing limited financial support from his family. Each month, he is forced to make difficult trade-offs just to get by, often cutting back on food to afford other essentials. What begins as small adjustments gradually turns into inconsistent meals and declining nutrition.
+
+As the semester progresses, the impact becomes harder to ignore. Ben feels constantly tired, struggles to focus during long study sessions, and finds it increasingly difficult to keep up with the demands of his program. Being far from home, without a strong support system, these challenges are compounded by stress and isolation. Food insecurity becomes more than a financial issue, it begins to affect his health, his academics, and his overall sense of stability`, summary: `International student fees
+
+Limited financial support, creating ongoing financial strain
+
+Experiences food insecurity due to budget constraints
+
+Faces fatigue and reduced academic performance linked to inconsistent meals` }
         ];
 
         let currentIndex = 0;
 
+        updateDisplay();
+
         function updateDisplay() {
             const student = students[currentIndex];
-            document.getElementById('studentName').textContent = student.name;
-            document.getElementById('enterBtn').href = student.file;
-            document.getElementById('pageIndicator').textContent = `${currentIndex + 1} / ${students.length}`;
+            document.getElementById('description').textContent = student.description;
+            document.getElementById('summary').textContent = student.summary;
+            document.getElementById('illustration').textContent = `Illustration of ${student.name}`;
+            document.getElementById('goBtn').href = student.file;
+            const thumbs = document.querySelectorAll('.thumb');
+            thumbs.forEach((thumb, i) => {
+                thumb.classList.toggle('selected', i === currentIndex);
+            });
         }
 
         function nextStudent() {
@@ -238,8 +393,8 @@
             updateDisplay();
         }
 
-        function previousStudent() {
-            currentIndex = (currentIndex - 1 + students.length) % students.length;
+        function selectStudent(index) {
+            currentIndex = index;
             updateDisplay();
         }
     </script>
