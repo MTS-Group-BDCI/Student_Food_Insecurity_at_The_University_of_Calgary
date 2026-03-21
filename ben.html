@@ -37,7 +37,7 @@
     }
 
     .back-link {
-      background: #6b6b6b;
+      background: #333;
       color: white;
       padding: 10px 16px;
       border-radius: 6px;
@@ -56,12 +56,14 @@
       justify-content: space-around;
       background: white;
       border-radius: 8px;
-      padding: 16px 24px;
+      padding: 8px 24px;
       width: 100%;
-      max-width: 600px;
+      max-width: 800px;
+      height: 30px;
       margin-bottom: 16px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       border: 1px solid #ddd;
+      align-items: center;
     }
 
     .metric {
@@ -104,6 +106,76 @@
       color: #999;
       font-size: 18px;
     }
+
+    .game-interface {
+      width: 100%;
+      max-width: 800px;
+      aspect-ratio: 1 / 1;
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      border: 2px solid #e0e0e0;
+      display: flex;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .visual-area {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .visual-rect {
+      width: 100%;
+      height: 100%;
+      background: #f0f0f0;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #333;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .button-area {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .action-btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .action-btn:hover {
+      opacity: 0.8;
+    }
+
+    #continueBtn {
+      background: #4CAF50;
+      color: white;
+    }
+
+    #choiceA, #choiceB {
+      background: #2196F3;
+      color: white;
+    }
+
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -131,5 +203,51 @@
   <div class="main-interface">
     <p>Game Interface</p>
   </div>
+
+  <div class="game-interface">
+    <div class="visual-area">
+      <div class="visual-rect" id="visual">Initial Visual</div>
+    </div>
+    <div class="button-area">
+    </div>
+  </div>
+
+  <script>
+    const types = {
+      A: { visual: "Situation: You have limited funds for food this month.", button: "Continue" },
+      B: { visual: "Problem: Do you cut back on food or essentials?", buttons: ["Food", "Essentials"] },
+      C: { visual: "Context: International fees and family support create financial strain.", button: "Continue" }
+    };
+
+    function showRandomType() {
+      const typeKeys = Object.keys(types);
+      const randomType = typeKeys[Math.floor(Math.random() * typeKeys.length)];
+      const type = types[randomType];
+      document.getElementById('visual').textContent = type.visual;
+      
+      const buttonArea = document.querySelector('.button-area');
+      buttonArea.innerHTML = '';
+      
+      if (type.button) {
+        const btn = document.createElement('button');
+        btn.className = 'action-btn';
+        btn.textContent = type.button;
+        btn.addEventListener('click', showRandomType);
+        buttonArea.appendChild(btn);
+      } else if (type.buttons) {
+        type.buttons.forEach(text => {
+          const btn = document.createElement('button');
+          btn.className = 'action-btn';
+          btn.textContent = text;
+          btn.addEventListener('click', showRandomType);
+          buttonArea.appendChild(btn);
+        });
+      }
+    }
+
+    // Initial
+    showRandomType();
+  </script>
+
 </body>
 </html>

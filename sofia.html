@@ -130,68 +130,52 @@
       height: 100%;
       background: #f0f0f0;
       border-radius: 12px;
-      di
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #333;
+      padding: 20px;
+      text-align: center;
+    }
 
   <div class="game-interface">
 
   <script>
-    const visuals = [
-      "You wake up early for your commute from Okotoks to campus.",
-      "Traffic is heavy, and you're running late for class.",
-      "You skip breakfast to save time, feeling hungry already.",
-      "In class, you struggle to focus due to fatigue from your schedule.",
-      "You work a part-time shift after classes, delaying dinner.",
-      "The day ends with you exhausted, having eaten only convenience food."
-    ];
+    const types = {
+      A: { visual: "Situation: Your commute from Okotoks is taking longer than expected today.", button: "Continue" },
+      B: { visual: "Problem: Do you skip breakfast to save time or grab fast food?", buttons: ["Skip", "Grab"] },
+      C: { visual: "Context: Balancing work and studies leaves little time for proper meals.", button: "Continue" }
+    };
 
-    let currentVisualIndex = 0;
-
-    function updateVisual() {
-      document.getElementById('visual').textContent = visuals[currentVisualIndex];
-      currentVisualIndex = (currentVisualIndex + 1) % visuals.length;
+    function showRandomType() {
+      const typeKeys = Object.keys(types);
+      const randomType = typeKeys[Math.floor(Math.random() * typeKeys.length)];
+      const type = types[randomType];
+      document.getElementById('visual').textContent = type.visual;
+      
+      const buttonArea = document.querySelector('.button-area');
+      buttonArea.innerHTML = '';
+      
+      if (type.button) {
+        const btn = document.createElement('button');
+        btn.className = 'action-btn';
+        btn.textContent = type.button;
+        btn.addEventListener('click', showRandomType);
+        buttonArea.appendChild(btn);
+      } else if (type.buttons) {
+        type.buttons.forEach(text => {
+          const btn = document.createElement('button');
+          btn.className = 'action-btn';
+          btn.textContent = text;
+          btn.addEventListener('click', showRandomType);
+          buttonArea.appendChild(btn);
+        });
+      }
     }
 
-    function showContinue() {
-      document.getElementById('continueBtn').classList.remove('hidden');
-      document.getElementById('choiceA').classList.add('hidden');
-      document.getElementById('choiceB').classList.add('hidden');
-    }
-
-    function showChoices() {
-      document.getElementById('continueBtn').classList.add('hidden');
-      document.getElementById('choiceA').classList.remove('hidden');
-      document.getElementById('choiceB').classList.remove('hidden');
-    }
-
-    document.getElementById('continueBtn').addEventListener('click', () => {
-      updateVisual();
-      if (Math.random() > 0.5) {
-        showContinue();
-      } else {
-        showChoices();
-      }
-    });
-
-    document.getElementById('choiceA').addEventListener('click', () => {
-      updateVisual();
-      if (Math.random() > 0.5) {
-        showContinue();
-      } else {
-        showChoices();
-      }
-    });
-
-    document.getElementById('choiceB').addEventListener('click', () => {
-      updateVisual();
-      if (Math.random() > 0.5) {
-        showContinue();
-      } else {
-        showChoices();
-      }
-    });
-
-    // Initial state
-    showContinue();
+    // Initial
+    showRandomType();
   </script>
 
     <div class="visual-area">
@@ -210,7 +194,7 @@
     }
 
     .button-area {
-      flex: 1;
+      flex: 2;
       display: flex;
       flex-direction: column;
       gap: 10px;
